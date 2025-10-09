@@ -16,4 +16,45 @@
 
 #include <iostream>
 
-int main(int, char **) {}
+struct fraction {
+  int num;
+  int den;
+
+  void display() {
+    std::cout << this->num << "/" << this->den << "\n";
+  }
+};
+
+double add(fraction x, fraction y) {
+  return (static_cast<double>(x.num) / x.den) + (static_cast<double>(y.num) / y.den);
+}
+
+double substract(fraction x, fraction y) {
+  return (static_cast<double>(x.num) / x.den) - (static_cast<double>(y.num) / y.den);
+}
+
+double multiply(fraction x, fraction y) {
+  return (static_cast<double>(x.num) / x.den) * (static_cast<double>(y.num) / y.den);
+}
+
+double divided(fraction x, fraction y) {
+  return (static_cast<double>(x.num) / x.den) / (static_cast<double>(y.num) / y.den);
+}
+
+double convert_to_double(fraction x) {
+  return static_cast<double>(x.num) / x.den;
+}
+
+fraction convert_to_fraction(int x) {
+  return fraction{x, 1};
+}
+
+int main() {
+  fraction f1{1, 4};
+
+  int entier = 2;
+
+  f1.display();
+
+  std::cout << add(f1, convert_to_fraction(entier)) << "\n";
+}

@@ -8,19 +8,52 @@
 
     n = i*largeur + j
 
-  Q1 - Proposez une structure tableau2D qui suit cette spécification.
+  ? Q1 - Proposez une structure tableau2D qui suit cette spécification.
 
-  Q2 - Surchargez l'opérateur () pour accéder à l'élément (i,j) du tableau.
+  ? Q2 - Surchargez l'opérateur () pour accéder à l'élément (i,j) du tableau.
 
-  Q3 - Surchargez l'opérateur d'insertion de flux afin d'affichez vos tableaux
+  ? Q3 - Surchargez l'opérateur d'insertion de flux afin d'affichez vos tableaux
 
-  Q4 - Fournissez sous forme de fonction un moyen d'obtenir la somme des
+  ? Q4 - Fournissez sous forme de fonction un moyen d'obtenir la somme des
   éléments du tableau
 
-  Q5 - Implémentez les fonctions membres begin() et end()
+  ? Q5 - Implémentez les fonctions membres begin() et end()
   permettant d'utiliser votre structure dans une boucle for par interval
 */
 
 #include <iostream>
+#include <vector>
 
-int main(int, char **) {}
+struct tableau2D {
+  int largeur;
+  int hauteur;
+  std::vector<int> data;
+
+  int getLinearPosition(int i, int j) {
+    return this->data[i*this->largeur + j];
+  }
+
+  void display() {
+    std::string res = "[ ";
+
+    for (int i = 0; i < this->data.size(); ++i) {
+      res += std::to_string(this->data[i]) + " ";
+    }
+    res += "]";
+
+    std::cout << res << "\n";
+  }
+
+  int sum() {
+    int res = 0;
+    for (int val : data) res += val;
+    return res;
+  }
+};
+
+int main() {
+  tableau2D tab{2, 2, {1, 2, 3, 4}};
+  tab.display(); // [ 1 2 3 4 ]
+  std::cout << "Element à la position (1,0) : " + std::to_string(tab.getLinearPosition(1, 0)) + "\n"; // 3
+  std::cout << "Somme des élèments : " + std::to_string(tab.sum()) + "\n"; // 10
+}
