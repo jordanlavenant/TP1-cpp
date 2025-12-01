@@ -90,7 +90,42 @@ double distance_ponderee(point3D A, point3D B) {
 }
 
 point3D furthest_point(std::vector<point3D> points, point3D point) {
-  return point3D{};
+  double max;
+  int index_max;
+  for (int i = 0; i < points.size(); ++i) {
+    double current = distance_ponderee(points[i], point);
+    if (current > max) {
+      max = current;
+      index_max = i;
+    }
+  }
+  return points[index_max];
+}
+
+point3D nearest_point(std::vector<point3D> points, point3D point) {
+  double min = distance_ponderee(points[0], point);
+  int index_min = 0;
+  for (int i = 1; i < points.size(); ++i) {
+    double current = distance_ponderee(points[i], point);
+    if (current < min) {
+      min = current;
+      index_min = i;
+    }
+  }
+  return points[index_min];
+}
+
+point3D barycentre(std::vector<point3D> points) {
+  point3D centre{0, 0, 0};
+  for (point3D point : points) {
+    centre.x += point.x;
+    centre.y += point.y;
+    centre.z += point.z;
+  }
+  centre.x /= points.size();
+  centre.y /= points.size();
+  centre.z /= points.size();
+  return centre;
 }
 
 int main() {
@@ -113,6 +148,15 @@ int main() {
 
   // ? Q5
   std::vector<point3D> points = { point3D{0, 0, 1}, point3D{2, 3, 1}, point3D{4, 3, 2}};
+  // std::cout << furthest_point(points, A);
 
-  std::cout << furthest_point(points, A);
+  // ? Q6
+  // std::cout << nearest_point(points, A);
+
+  // ? Q7
+  // std::cout << barycentre(points);
+
+  // ? Q8
+  point3D centre = barycentre(points);
+  std::cout << distance_ponderee(nearest_point(points, centre), furthest_point(points, centre));
 }
