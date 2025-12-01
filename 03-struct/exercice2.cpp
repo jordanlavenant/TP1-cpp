@@ -23,6 +23,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 struct tableau2D {
   int largeur;
@@ -43,11 +44,18 @@ struct tableau2D {
 
     std::cout << res << "\n";
   }
-
   int sum() {
     int res = 0;
-    for (int val : data) res += val;
+    for (int val : this->data) res += val;
     return res;
+  }
+
+  std::vector<int>::iterator begin() {
+    return this->data.begin();
+  }
+
+  std::vector<int>::iterator end() {
+    return this->data.end();
   }
 };
 

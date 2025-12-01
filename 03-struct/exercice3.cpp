@@ -1,26 +1,28 @@
 /*
   Exercice 3 - Nuage de points
 
-  Q1 - Implémentez une structure représentant un point 3D pondéré par un réel.
+  ? Q1 - Implémentez une structure représentant un point 3D pondéré par un réel.
 
-  Q2 - Implémentez les opérateurs nécessaires pour extraire et insérer une
+  ? Q2 - Implémentez les opérateurs nécessaires pour extraire et insérer une
   instance de cette structure dans un flux.
 
-  Q3 - Renseignez vous sur la fonction std::getline.
+  ? Q3 - Renseignez vous sur la fonction std::getline.
     Utilisez la pour lire un fichier texte contenant une quantité
     arbitraire de points pondérés. Cette fonction prendra en paramètre le nom du
     fichier à lire et renverra un std::vector de point 3D pondéré.
 
-  Q4 - Implémentez une fonction calculant la distance entre deux points pondérés
+  ? Q4 - Implémentez une fonction calculant la distance entre deux points pondérés
 
-  Q5 - Implémentez une fonction renvoyant le point le plus éloigné d'un point
+  ? Q5 - Implémentez une fonction renvoyant le point le plus éloigné d'un point
     donné parmi tous les points stockés dans un std::vector de points pondérés.
 
-  Q6 - Implémentez une fonction renvoyant le point le plus proche d'un point
+  ? Q6 - Implémentez une fonction renvoyant le point le plus proche d'un point
     donné parmi tous les points stockés dans un std::vector de points pondérés.
 
-  Q7 - Implémentez une fonction calculant le barycentre d'un ensemble de point
-    stocké dans un std::vector. Q8 - Implémentez une fonction calculant la
+  ? Q7 - Implémentez une fonction calculant le barycentre d'un ensemble de point
+    stocké dans un std::vector. 
+    
+  ? Q8 - Implémentez une fonction calculant la
     distance entre le point le plus proche et le plus éloigné du barycentre d'un
     ensemble de points.
 
@@ -29,5 +31,88 @@
 */
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <math.h>
 
-int main(int, char **) {}
+// ? Q1
+struct point3D {
+  int x;
+  int y;
+  int z;
+};
+
+// ? Q2
+std::ostream& operator<<(std::ostream& os, point3D const &p) {
+  os << "(" + std::to_string(p.x) + ", " + std::to_string(p.y) + ", " + std::to_string(p.z) + ")\n";
+  return os;
+}
+
+std::vector<point3D> open_file(std::string path) {
+  std::ifstream file(path);
+  if (!file) {
+    std::cout << "Erreur lors de l'ouverture du fichier donné.\n";
+    return std::vector<point3D>();
+  }
+
+  std::string line;
+  std::vector<point3D> res;
+
+  std::cout << "Fichier choisi : " << path << std::endl;
+
+  while (std::getline(file, line)) {
+    std::istringstream coordinates(line);
+    std::string value;
+    point3D point;
+    
+    // Parse X
+    if (std::getline(coordinates, value, ',')) {
+      point.x = std::stoi(value);
+    }
+    // Parse Y
+    if (std::getline(coordinates, value, ',')) {
+      point.y = std::stoi(value);
+    }
+    // Parse Z
+    if (std::getline(coordinates, value)) {
+      point.z = std::stoi(value);
+    }
+    
+    res.push_back(point);
+  }
+  
+  return res;
+}
+
+double distance_ponderee(point3D A, point3D B) {
+  return sqrt(std::pow(B.x - A.x, 2.0) + std::pow(B.y - A.y, 2.0) + std::pow(B.z - A.z, 2.0));
+}
+
+point3D furthest_point(std::vector<point3D> points, point3D point) {
+  return point3D{};
+}
+
+int main() {
+  // ? Q3
+  // std::string file_path;
+  // std::cout << "Entrez le nom du fichier : ";
+  // std::cin >> file_path;
+
+  // std::vector<point3D> points = open_file(file_path);
+
+  // for (point3D point : points) {
+  //   std::cout << point;
+  // }
+
+  // ? Q4
+  point3D A{0, 0, 0};
+  // point3D B{1, 1, 1};
+
+  // std::cout << distance_ponderee(A, B);
+
+  // ? Q5
+  std::vector<point3D> points = { point3D{0, 0, 1}, point3D{2, 3, 1}, point3D{4, 3, 2}};
+
+  std::cout << furthest_point(points, A);
+}
